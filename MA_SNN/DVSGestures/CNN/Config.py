@@ -5,7 +5,7 @@ import torch.nn as nn
 class configs(object):
     def __init__(self):
         self.dt = 25
-        self.T = 60
+        self.T = 20
 
         self.attention = "no"
         self.c_ratio=8
@@ -15,8 +15,8 @@ class configs(object):
         self.onlyTest = False
         self.pretrained_path = None
 
-        self.batch_size = 128
-        self.batch_size_test = 128
+        self.batch_size = 16
+        self.batch_size_test = 16
 
         # None  'kaiming'  'xavier'
         self.init_method = None

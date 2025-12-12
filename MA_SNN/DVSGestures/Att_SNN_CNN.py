@@ -2,16 +2,24 @@ import os
 
 import sys
 
-sys.path.append(os.path.dirname("__file__"))
-from DVSGestures.CNN import Att_SNN
+#sys.path.append(os.path.dirname("__file__"))
+#from DVSGestures.CNN import Att_SNN
+
+# rootPath = os.path.abspath(os.path.dirname(__file__))
+# rootPath = os.path.split(rootPath)[0]
+# sys.path.append(rootPath)
+
+# from DVSGestures.CNN import Config
 
 rootPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(rootPath)[0]
 sys.path.append(rootPath)
 
+from DVSGestures.CNN import Att_SNN
+
 from DVSGestures.CNN import Config
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "4,"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,"
 
 
 class Logger(object):
@@ -35,7 +43,6 @@ sys.stdout = Logger(logPath + os.sep + "log_DVS_Gesture_SNN.txt")
 
 def main():
     Att_SNN.main()
-
 
 if __name__ == "__main__":
     main()
