@@ -106,3 +106,12 @@ class TA(nn.Module):
 - 结果等价于抑制膜电位增长，减少脉冲发放。
 
 这是 Attention-SNN 的核心创新：通过可训练的时间步权重选择性地抑制输入，间接控制膜电位和脉冲发放。
+
+他的时间注意力模块在`MA_SNN/module/Attention.py`中，实现如下：
+```7:33:MA_SNN/module/Attention.py
+class TimeAttention(nn.Module):
+    def __init__(self, in_planes, ratio=16, fc=False):
+
+是一个和新的输入有关的，这个和我想要的不太一样
+我需要重新做数据切分然后只有一个T这样的参数
+最后使用这个注意力模块，这样就可以得到一个T*C的注意力权重，然后就可以直接做硬门控
