@@ -10,6 +10,7 @@ class configs(object):
         self.attention = "no"
         self.c_ratio=8
         self.t_ratio=5
+        self.disable_spike = False  # 是否禁止发放脉冲（仅对TA有效）
         self.epoch = 0
         self.num_epochs = 300
         self.onlyTest = False

@@ -138,16 +138,46 @@ def sample_train(hdf5_file,
                  ):
     label = hdf5_file['labels'][()]
 
+    # 修改为和测试一样的均匀切分方式
     tbegin = hdf5_file['times'][0]
-    tend = np.maximum(0, hdf5_file['times'][-1] - T * dt)
-
-    start_time = np.random.randint(tbegin, tend) if is_train_Enhanced else 0
+    tend = np.maximum(0, hdf5_file['times'][-1])
 
     tmad = get_tmad_slice(hdf5_file['times'][()],
                           hdf5_file['addrs'][()],
-                          start_time,
-                          T * dt)
+                          tbegin,
+                          tend - tbegin)
+    # 初始从零开始
     tmad[:, 0] -= tmad[0, 0]
+
+    start_time = tmad[0, 0]
+    end_time = tmad[-1, 0]
+
+    # 对于训练，只取一个clip，均匀切分
+    # 如果数据长度不足T*dt，从开始截取
+    if T * dt - (end_time - start_time) > 0:
+        # 数据长度不足，从开始截取
+        start_point = 0
+    else:
+        # 数据长度足够，均匀分布（类似测试代码）
+        # 计算overlap，使得能够均匀覆盖整个时间段
+        overlap = int(np.floor(((end_time - start_time) - T * dt)))
+        # 对于训练，可以选择从中间开始，或者随机选择
+        if is_train_Enhanced:
+            # 随机选择一个起始点
+            max_start = max(0, end_time - T * dt)
+            start_point = np.random.randint(0, max_start) if max_start > 0 else 0
+        else:
+            # 从中间开始，或者从开始
+            start_point = overlap // 2 if overlap > 0 else 0
+
+    # 截取固定长度
+    idx_beg = find_first(tmad[:, 0], start_time + start_point)
+    idx_end = find_first(tmad[:, 0][idx_beg:], start_time + start_point + T * dt) + idx_beg
+
+    if idx_end > idx_beg:
+        tmad = tmad[idx_beg:idx_end]
+        tmad[:, 0] -= tmad[0, 0]  # 重新从0开始
+
     return tmad[:, [0, 3, 1, 2]], label
 
 

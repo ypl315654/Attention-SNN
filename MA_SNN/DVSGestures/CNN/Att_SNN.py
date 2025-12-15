@@ -27,6 +27,8 @@ def parse_args():
                         help='通道比例 (默认: 8)')
     parser.add_argument('--t_ratio', type=int, 
                         help='时间比例 (默认: 5)')
+    parser.add_argument('--disable_spike', action='store_true',
+                        help='是否禁止发放脉冲（仅对TA有效，默认: False）')
     parser.add_argument('--result_dir', type=str, 
                         help='结果保存目录（会覆盖Config中的recordPath）')
     return parser.parse_args()
@@ -69,6 +71,10 @@ def main():
     if args.t_ratio is not None:
         config.t_ratio = args.t_ratio
         print(f"命令行设置：t_ratio={config.t_ratio}")
+    
+    if args.disable_spike:
+        config.disable_spike = True
+        print(f"命令行设置：disable_spike={config.disable_spike}")
     
     # 如果指定了结果目录，覆盖默认路径
     if args.result_dir is not None:

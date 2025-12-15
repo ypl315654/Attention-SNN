@@ -85,7 +85,8 @@ def create_net(config):
                 mem_act=config.mem_act,
                 TR_model=config.TR_model,
                 c_ratio=config.c_ratio,
-                t_ratio=config.t_ratio
+                t_ratio=config.t_ratio,
+                disable_spike=config.disable_spike
             )
 
             in_planes, out_planes, stride, padding, kernel_size = cfg_cnn[1]
@@ -115,7 +116,8 @@ def create_net(config):
                 mem_act=config.mem_act,
                 TR_model=config.TR_model,
                 c_ratio=config.c_ratio,
-                t_ratio=config.t_ratio
+                t_ratio=config.t_ratio,
+                disable_spike=config.disable_spike
             )
 
             in_planes, out_planes, stride, padding, kernel_size = cfg_cnn[2]
@@ -145,7 +147,8 @@ def create_net(config):
                 mem_act=config.mem_act,
                 TR_model=config.TR_model,
                 c_ratio=config.c_ratio,
-                t_ratio=config.t_ratio
+                t_ratio=config.t_ratio,
+                disable_spike=config.disable_spike
             )
 
             self.FC0 = AttLIF(
@@ -168,7 +171,8 @@ def create_net(config):
                 mode_select=config.mode_select,
                 mem_act=config.mem_act,
                 TR_model=config.TR_model,
-                t_ratio=config.t_ratio
+                t_ratio=config.t_ratio,
+                disable_spike=config.disable_spike
             )
 
             self.FC1 = AttLIF(
@@ -191,7 +195,8 @@ def create_net(config):
                 mode_select=config.mode_select,
                 mem_act=config.mem_act,
                 TR_model=config.TR_model,
-                t_ratio=config.t_ratio
+                t_ratio=config.t_ratio,
+                disable_spike=config.disable_spike
             )
 
         def forward(self, input):
