@@ -161,24 +161,46 @@ class TSA(nn.Module):
 
 
 class TA(nn.Module):
-    def __init__(self, timeWindows, channels, stride=1, t_ratio=16, fc=False):
+    def __init__(self, timeWindows, channels, stride=1, t_ratio=16, fc=False, disable_spike=False):
         super(TA, self).__init__()
 
         self.relu = nn.ReLU(inplace=True)
+        self.timeWindows = timeWindows
+        self.channels = channels
+        self.fc = fc
+        self.disable_spike = disable_spike  # 是否禁止发放脉冲
 
-        # self.ca = ChannelAttention(channels)
-        self.ta = TimeAttention(timeWindows, t_ratio, fc)
-        # self.sa = SpatialAttention()
+        # 不再使用TimeAttention，而是使用可训练参数
+        # 创建可训练的时间注意力权重，形状为 (timeWindows, channels, 1, 1) 或 (timeWindows, channels)
+        if fc:
+            # 全连接层：形状为 (timeWindows, channels)
+            self.attention_weights = nn.Parameter(torch.ones(timeWindows, channels))
+        else:
+            # 卷积层：形状为 (timeWindows, channels, 1, 1)
+            self.attention_weights = nn.Parameter(torch.ones(timeWindows, channels, 1, 1))
+        
+        # 使用sigmoid确保权重在0-1之间
+        self.sigmoid = nn.Sigmoid()
 
         self.stride = stride
 
     def forward(self, x):
-        out = self.ta(x) * x
-        # out = self.ca(x) * out  # 广播机制
-        # out = self.sa(x) * out  # 广播机制
-
-        out = self.relu(out)
-        return out
+        # 不再使用 ta(x) * x，而是返回原始输入和注意力权重
+        b = x.size(0)
+        
+        if self.fc:
+            # 全连接层：x形状为 (b, t, channels)
+            # attention_weights形状为 (timeWindows, channels)
+            weights = self.sigmoid(self.attention_weights)  # (timeWindows, channels)
+            weights = weights.unsqueeze(0).expand(b, -1, -1)  # (b, timeWindows, channels)
+        else:
+            # 卷积层：x形状为 (b, t, c, h, w)
+            # attention_weights形状为 (timeWindows, channels, 1, 1)
+            weights = self.sigmoid(self.attention_weights)  # (timeWindows, channels, 1, 1)
+            weights = weights.unsqueeze(0).expand(b, -1, -1, -1, -1)  # (b, timeWindows, channels, 1, 1)
+        
+        # 返回原始输入和注意力权重
+        return x, weights
 
 
 class CA(nn.Module):

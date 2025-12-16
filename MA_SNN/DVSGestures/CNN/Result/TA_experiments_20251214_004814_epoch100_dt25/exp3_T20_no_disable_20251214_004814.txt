@@ -1,0 +1,1184 @@
+================================================================================
+实验: 实验3: T=20 (不禁止发放脉冲)
+描述: T=20，不禁止发放脉冲，作为对照实验，训练100个epoch
+开始时间: 2025-12-14 02:52:17
+执行命令: python Att_SNN_CNN.py --attention TA --T 20 --dt 25 --num_epochs 100
+================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+命令行设置：训练轮数=100
+命令行设置：dt=25
+命令行设置：T=20
+cuda
+range(0, 1)
+dt==25
+T==20
+attention==TA
+c_ratio==8
+t_ratio==5
+disable_spike==False
+epoch==0
+num_epochs==100
+onlyTest==False
+pretrained_path==None
+batch_size==16
+batch_size_test==16
+init_method==None
+ds==4
+in_channels==2
+im_width==32
+im_height==32
+target_size==11
+clip==10
+is_train_Enhanced==True
+is_spike==False
+interval_scaling==False
+beta==0
+alpha==0.3
+Vreset==0
+Vthres==0.3
+reduction==16
+T_extend_Conv==False
+T_extend_BN==False
+h_conv==False
+mem_act==<built-in method relu of type object at 0x00007FFC4F8C9680>
+mode_select==spike
+TR_model==NTR
+track_running_stats==True
+a==0.5
+lens==0.25
+lr==0.0001
+betas==[0.9, 0.999]
+eps==1e-08
+weight_decay==0
+lr_scheduler==True
+lr_scheduler_epoch==25
+name==TA_SNN(CNN)-DVS-Gesture_dt=25ms_T=20_epoch=100_20251214025217
+modelPath==C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result
+modelNames==TA_SNN(CNN)-DVS-Gesture_dt=25ms_T=20_epoch=100_20251214025217.t7
+recordPath==C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result
+recordNames==TA_SNN(CNN)-DVS-Gesture_dt=25ms_T=20_epoch=100_20251214025217.csv
+savePath==C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\data
+train_dataset==None
+test_dataset==None
+train_loader==None
+test_loader==None
+drop_last==False
+pip_memory==False
+num_work==8
+model==None
+criterion==MSELoss()
+optimizer==None
+device==cuda
+device_ids==range(0, 1)
+best_acc==0
+best_epoch==0
+epoch_list==[]
+loss_train_list==[]
+loss_test_list==[]
+acc_train_list==[]
+acc_test_list==[]
+train_loss==0
+train_correct==0
+train_acc==0
+test_loss==0
+test_correct==0
+test_acc==0
+state==None
+
+DataParallel(
+  (module): Net(
+    (convAttLIF0): ConvAttLIF(
+      (conv2d): Conv2d(2, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (BNLayer): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (attention): TA(
+        (relu): ReLU(inplace=True)
+        (sigmoid): Sigmoid()
+      )
+      (network): Sequential(
+        (ConvIF): ConvIFCell()
+      )
+    )
+    (convAttLIF1): ConvAttLIF(
+      (conv2d): Conv2d(64, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (BNLayer): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pooling): AvgPool2d(kernel_size=2, stride=2, padding=0)
+      (attention): TA(
+        (relu): ReLU(inplace=True)
+        (sigmoid): Sigmoid()
+      )
+      (network): Sequential(
+        (ConvIF): ConvIFCell()
+      )
+    )
+    (convAttLIF2): ConvAttLIF(
+      (conv2d): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (BNLayer): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (pooling): AvgPool2d(kernel_size=2, stride=2, padding=0)
+      (attention): TA(
+        (relu): ReLU(inplace=True)
+        (sigmoid): Sigmoid()
+      )
+      (network): Sequential(
+        (ConvIF): ConvIFCell()
+      )
+    )
+    (FC0): AttLIF(
+      (network): Sequential(
+        (IF): IFCell()
+      )
+      (linear): Linear(in_features=8192, out_features=256, bias=True)
+      (BNLayer): BatchNorm1d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (attention): TA(
+        (relu): ReLU(inplace=True)
+        (sigmoid): Sigmoid()
+      )
+    )
+    (FC1): AttLIF(
+      (network): Sequential(
+        (IF): IFCell()
+      )
+      (linear): Linear(in_features=256, out_features=11, bias=True)
+      (BNLayer): BatchNorm1d(11, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (attention): TA(
+        (relu): ReLU(inplace=True)
+        (sigmoid): Sigmoid()
+      )
+    )
+  )
+)
+{'Total': 2335805, 'Trainable': 2335805}
+epoch: 1
+dt: 25
+T: 20
+Tarin loss:0.13997
+Train acc: 44.766
+Test loss:0.01745
+Test acc: 35.417
+Saving..
+beat acc: 35.416666666666664
+epoch: 2
+dt: 25
+T: 20
+Tarin loss:0.11444
+Train acc: 54.553
+Test loss:0.01472
+Test acc: 38.542
+Saving..
+beat acc: 38.541666666666664
+epoch: 3
+dt: 25
+T: 20
+Tarin loss:0.10469
+Train acc: 58.128
+Test loss:0.01121
+Test acc: 48.611
+Saving..
+beat acc: 48.611111111111114
+epoch: 4
+dt: 25
+T: 20
+Tarin loss:0.09768
+Train acc: 59.830
+Test loss:0.01158
+Test acc: 45.139
+beat acc: 48.611111111111114
+epoch: 5
+dt: 25
+T: 20
+Tarin loss:0.08914
+Train acc: 63.234
+Test loss:0.00953
+Test acc: 56.250
+Saving..
+beat acc: 56.25
+epoch: 6
+dt: 25
+T: 20
+Tarin loss:0.08305
+Train acc: 65.957
+Test loss:0.00945
+Test acc: 57.639
+Saving..
+beat acc: 57.638888888888886
+epoch: 7
+dt: 25
+T: 20
+Tarin loss:0.08007
+Train acc: 67.660
+Test loss:0.00833
+Test acc: 56.944
+beat acc: 57.638888888888886
+epoch: 8
+dt: 25
+T: 20
+Tarin loss:0.07639
+Train acc: 68.596
+Test loss:0.00791
+Test acc: 58.333
+Saving..
+beat acc: 58.333333333333336
+epoch: 9
+dt: 25
+T: 20
+Tarin loss:0.07396
+Train acc: 69.447
+Test loss:0.00749
+Test acc: 59.722
+Saving..
+beat acc: 59.72222222222222
+epoch: 10
+dt: 25
+T: 20
+Tarin loss:0.06861
+Train acc: 73.447
+Test loss:0.00783
+Test acc: 62.500
+Saving..
+beat acc: 62.5
+epoch: 11
+dt: 25
+T: 20
+Tarin loss:0.06439
+Train acc: 75.149
+Test loss:0.00815
+Test acc: 60.417
+beat acc: 62.5
+epoch: 12
+dt: 25
+T: 20
+Tarin loss:0.06304
+Train acc: 75.234
+Test loss:0.00687
+Test acc: 65.625
+Saving..
+beat acc: 65.625
+epoch: 13
+dt: 25
+T: 20
+Tarin loss:0.06054
+Train acc: 74.809
+Test loss:0.00653
+Test acc: 74.653
+Saving..
+beat acc: 74.65277777777777
+epoch: 14
+dt: 25
+T: 20
+Tarin loss:0.05784
+Train acc: 77.872
+Test loss:0.00674
+Test acc: 68.750
+beat acc: 74.65277777777777
+epoch: 15
+dt: 25
+T: 20
+Tarin loss:0.05690
+Train acc: 77.106
+Test loss:0.00653
+Test acc: 71.875
+beat acc: 74.65277777777777
+epoch: 16
+dt: 25
+T: 20
+Tarin loss:0.05555
+Train acc: 79.915
+Test loss:0.00721
+Test acc: 72.569
+beat acc: 74.65277777777777
+epoch: 17
+dt: 25
+T: 20
+Tarin loss:0.05202
+Train acc: 81.702
+Test loss:0.00576
+Test acc: 75.694
+Saving..
+beat acc: 75.69444444444444
+epoch: 18
+dt: 25
+T: 20
+Tarin loss:0.05059
+Train acc: 80.936
+Test loss:0.00507
+Test acc: 78.472
+Saving..
+beat acc: 78.47222222222223
+epoch: 19
+dt: 25
+T: 20
+Tarin loss:0.04590
+Train acc: 83.064
+Test loss:0.00602
+Test acc: 73.264
+beat acc: 78.47222222222223
+epoch: 20
+dt: 25
+T: 20
+Tarin loss:0.04490
+Train acc: 83.064
+Test loss:0.00657
+Test acc: 77.083
+beat acc: 78.47222222222223
+epoch: 21
+dt: 25
+T: 20
+Tarin loss:0.04491
+Train acc: 82.809
+Test loss:0.00506
+Test acc: 80.208
+Saving..
+beat acc: 80.20833333333333
+epoch: 22
+dt: 25
+T: 20
+Tarin loss:0.04044
+Train acc: 85.021
+Test loss:0.00569
+Test acc: 76.736
+beat acc: 80.20833333333333
+epoch: 23
+dt: 25
+T: 20
+Tarin loss:0.03906
+Train acc: 85.021
+Test loss:0.00450
+Test acc: 78.819
+beat acc: 80.20833333333333
+epoch: 24
+dt: 25
+T: 20
+Tarin loss:0.03816
+Train acc: 85.617
+Test loss:0.00474
+Test acc: 81.250
+Saving..
+beat acc: 81.25
+epoch: 25
+dt: 25
+T: 20
+Tarin loss:0.03573
+Train acc: 88.936
+Test loss:0.00484
+Test acc: 80.903
+beat acc: 81.25
+epoch: 26
+dt: 25
+T: 20
+Tarin loss:0.03645
+Train acc: 87.915
+Test loss:0.00502
+Test acc: 79.514
+beat acc: 81.25
+epoch: 27
+dt: 25
+T: 20
+Tarin loss:0.03536
+Train acc: 87.830
+Test loss:0.00426
+Test acc: 81.597
+Saving..
+beat acc: 81.59722222222223
+epoch: 28
+dt: 25
+T: 20
+Tarin loss:0.03370
+Train acc: 89.021
+Test loss:0.00423
+Test acc: 82.292
+Saving..
+beat acc: 82.29166666666667
+epoch: 29
+dt: 25
+T: 20
+Tarin loss:0.03261
+Train acc: 89.447
+Test loss:0.00399
+Test acc: 85.069
+Saving..
+beat acc: 85.06944444444444
+epoch: 30
+dt: 25
+T: 20
+Tarin loss:0.03238
+Train acc: 89.957
+Test loss:0.00451
+Test acc: 84.028
+beat acc: 85.06944444444444
+epoch: 31
+dt: 25
+T: 20
+Tarin loss:0.03072
+Train acc: 90.468
+Test loss:0.00357
+Test acc: 84.028
+beat acc: 85.06944444444444
+epoch: 32
+dt: 25
+T: 20
+Tarin loss:0.03017
+Train acc: 90.383
+Test loss:0.00423
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test acc: 83.681
+beat acc: 85.06944444444444
+epoch: 33
+dt: 25
+T: 20
+Tarin loss:0.02919
+Train acc: 90.468
+Test loss:0.00366
+Test acc: 85.764
+Saving..
+beat acc: 85.76388888888889
+epoch: 34
+dt: 25
+T: 20
+Tarin loss:0.02919
+Train acc: 90.894
+Test loss:0.00404
+Test acc: 84.375
+beat acc: 85.76388888888889
+epoch: 35
+dt: 25
+T: 20
+Tarin loss:0.02776
+Train acc: 91.234
+Test loss:0.00394
+Test acc: 84.028
+beat acc: 85.76388888888889
+epoch: 36
+dt: 25
+T: 20
+Tarin loss:0.02700
+Train acc: 91.745
+Test loss:0.00359
+Test acc: 84.722
+beat acc: 85.76388888888889
+epoch: 37
+dt: 25
+T: 20
+Tarin loss:0.02748
+Train acc: 90.298
+Test loss:0.00401
+Test acc: 86.458
+Saving..
+beat acc: 86.45833333333333
+epoch: 38
+dt: 25
+T: 20
+Tarin loss:0.02575
+Train acc: 92.936
+Test loss:0.00333
+Test acc: 85.069
+beat acc: 86.45833333333333
+epoch: 39
+dt: 25
+T: 20
+Tarin loss:0.02491
+Train acc: 92.511
+Test loss:0.00389
+Test acc: 86.458
+beat acc: 86.45833333333333
+epoch: 40
+dt: 25
+T: 20
+Tarin loss:0.02326
+Train acc: 94.128
+Test loss:0.00325
+Test acc: 85.764
+beat acc: 86.45833333333333
+epoch: 41
+dt: 25
+T: 20
+Tarin loss:0.02478
+Train acc: 91.915
+Test loss:0.00448
+Test acc: 84.375
+beat acc: 86.45833333333333
+epoch: 42
+dt: 25
+T: 20
+Tarin loss:0.02508
+Train acc: 92.851
+Test loss:0.00312
+Test acc: 85.764
+beat acc: 86.45833333333333
+epoch: 43
+dt: 25
+T: 20
+Tarin loss:0.02233
+Train acc: 94.553
+Test loss:0.00328
+Test acc: 85.069
+beat acc: 86.45833333333333
+epoch: 44
+dt: 25
+T: 20
+Tarin loss:0.02184
+Train acc: 94.383
+Test loss:0.00345
+Test acc: 86.806
+Saving..
+beat acc: 86.80555555555556
+epoch: 45
+dt: 25
+T: 20
+Tarin loss:0.02180
+Train acc: 93.702
+Test loss:0.00399
+Test acc: 86.458
+beat acc: 86.80555555555556
+epoch: 46
+dt: 25
+T: 20
+Tarin loss:0.02174
+Train acc: 93.617
+Test loss:0.00329
+Test acc: 85.764
+beat acc: 86.80555555555556
+epoch: 47
+dt: 25
+T: 20
+Tarin loss:0.02050
+Train acc: 94.809
+Test loss:0.00370
+Test acc: 85.069
+beat acc: 86.80555555555556
+epoch: 48
+dt: 25
+T: 20
+Tarin loss:0.02022
+Train acc: 94.468
+Test loss:0.00344
+Test acc: 87.153
+Saving..
+beat acc: 87.15277777777777
+epoch: 49
+dt: 25
+T: 20
+Tarin loss:0.02014
+Train acc: 94.553
+Test loss:0.00358
+Test acc: 85.417
+beat acc: 87.15277777777777
+epoch: 50
+dt: 25
+T: 20
+Tarin loss:0.01974
+Train acc: 94.809
+Test loss:0.00407
+Test acc: 85.069
+beat acc: 87.15277777777777
+epoch: 51
+dt: 25
+T: 20
+Tarin loss:0.01838
+Train acc: 96.681
+Test loss:0.00310
+Test acc: 85.764
+beat acc: 87.15277777777777
+epoch: 52
+dt: 25
+T: 20
+Tarin loss:0.01805
+Train acc: 96.085
+Test loss:0.00334
+Test acc: 84.722
+beat acc: 87.15277777777777
+epoch: 53
+dt: 25
+T: 20
+Tarin loss:0.01820
+Train acc: 96.596
+Test loss:0.00300
+Test acc: 86.458
+beat acc: 87.15277777777777
+epoch: 54
+dt: 25
+T: 20
+Tarin loss:0.01688
+Train acc: 96.340
+Test loss:0.00280
+Test acc: 87.500
+Saving..
+beat acc: 87.5
+epoch: 55
+dt: 25
+T: 20
+Tarin loss:0.01652
+Train acc: 96.000
+Test loss:0.00290
+Test acc: 87.500
+beat acc: 87.5
+epoch: 56
+dt: 25
+T: 20
+Tarin loss:0.01715
+Train acc: 95.830
+Test loss:0.00316
+Test acc: 86.458
+beat acc: 87.5
+epoch: 57
+dt: 25
+T: 20
+Tarin loss:0.01696
+Train acc: 95.149
+Test loss:0.00367
+Test acc: 88.194
+Saving..
+beat acc: 88.19444444444444
+epoch: 58
+dt: 25
+T: 20
+Tarin loss:0.01655
+Train acc: 96.511
+Test loss:0.00304
+Test acc: 86.458
+beat acc: 88.19444444444444
+epoch: 59
+dt: 25
+T: 20
+Tarin loss:0.01634
+Train acc: 96.766
+Test loss:0.00272
+Test acc: 89.236
+Saving..
+beat acc: 89.23611111111111
+epoch: 60
+dt: 25
+T: 20
+Tarin loss:0.01547
+Train acc: 96.851
+Test loss:0.00305
+Test acc: 86.458
+beat acc: 89.23611111111111
+epoch: 61
+dt: 25
+T: 20
+Tarin loss:0.01607
+Train acc: 96.511
+Test loss:0.00425
+Test acc: 83.333
+beat acc: 89.23611111111111
+epoch: 62
+dt: 25
+T: 20
+Tarin loss:0.01524
+Train acc: 96.085
+Test loss:0.00291
+Test acc: 88.542
+beat acc: 89.23611111111111
+epoch: 63
+dt: 25
+T: 20
+Tarin loss:0.01490
+Train acc: 97.362
+Test loss:0.00275
+Test acc: 86.111
+beat acc: 89.23611111111111
+epoch: 64
+dt: 25
+T: 20
+Tarin loss:0.01449
+Train acc: 97.021
+Test loss:0.00270
+Test acc: 86.806
+beat acc: 89.23611111111111
+epoch: 65
+dt: 25
+T: 20
+Tarin loss:0.01440
+Train acc: 96.936
+Test loss:0.00270
+Test acc: 88.889
+beat acc: 89.23611111111111
+epoch: 66
+dt: 25
+T: 20
+Tarin loss:0.01298
+Train acc: 97.447
+Test loss:0.00266
+Test acc: 87.847
+beat acc: 89.23611111111111
+epoch: 67
+dt: 25
+T: 20
+Tarin loss:0.01384
+Train acc: 96.936
+Test loss:0.00291
+Test acc: 86.458
+beat acc: 89.23611111111111
+epoch: 68
+dt: 25
+T: 20
+Tarin loss:0.01318
+Train acc: 97.362
+Test loss:0.00274
+Test acc: 88.194
+beat acc: 89.23611111111111
+epoch: 69
+dt: 25
+T: 20
+Tarin loss:0.01370
+Train acc: 97.362
+Test loss:0.00252
+Test acc: 88.889
+beat acc: 89.23611111111111
+epoch: 70
+dt: 25
+T: 20
+Tarin loss:0.01360
+Train acc: 96.426
+Test loss:0.00255
+Test acc: 87.500
+beat acc: 89.23611111111111
+epoch: 71
+dt: 25
+T: 20
+Tarin loss:0.01305
+Train acc: 97.191
+Test loss:0.00261
+Test acc: 88.542
+beat acc: 89.23611111111111
+epoch: 72
+dt: 25
+T: 20
+Tarin loss:0.01301
+Train acc: 98.043
+Epoch    72: reducing learning rate of group 0 to 1.0000e-05.
+Test loss:0.00283
+Test acc: 85.069
+beat acc: 89.23611111111111
+epoch: 73
+dt: 25
+T: 20
+Tarin loss:0.01302
+Train acc: 97.362
+Test loss:0.00246
+Test acc: 88.194
+beat acc: 89.23611111111111
+epoch: 74
+dt: 25
+T: 20
+Tarin loss:0.01255
+Train acc: 96.766
+Test loss:0.00242
+Test acc: 87.847
+beat acc: 89.23611111111111
+epoch: 75
+dt: 25
+T: 20
+Tarin loss:0.01149
+Train acc: 98.723
+Test loss:0.00254
+Test acc: 88.542
+beat acc: 89.23611111111111
+epoch: 76
+dt: 25
+T: 20
+Tarin loss:0.01110
+Train acc: 98.468
+Test loss:0.00248
+Test acc: 88.889
+beat acc: 89.23611111111111
+epoch: 77
+dt: 25
+T: 20
+Tarin loss:0.01219
+Train acc: 97.617
+Test loss:0.00241
+Test acc: 89.583
+Saving..
+beat acc: 89.58333333333333
+epoch: 78
+dt: 25
+T: 20
+Tarin loss:0.01105
+Train acc: 98.383
+Test loss:0.00258
+Test acc: 88.542
+beat acc: 89.58333333333333
+epoch: 79
+dt: 25
+T: 20
+Tarin loss:0.01087
+Train acc: 98.638
+Test loss:0.00249
+Test acc: 88.542
+beat acc: 89.58333333333333
+epoch: 80
+dt: 25
+T: 20
+Tarin loss:0.01052
+Train acc: 98.553
+Test loss:0.00237
+Test acc: 89.236
+beat acc: 89.58333333333333
+epoch: 81
+dt: 25
+T: 20
+Tarin loss:0.01052
+Train acc: 98.638
+Test loss:0.00252
+Test acc: 88.194
+beat acc: 89.58333333333333
+epoch: 82
+dt: 25
+T: 20
+Tarin loss:0.01030
+Train acc: 98.723
+Test loss:0.00239
+Test acc: 88.542
+beat acc: 89.58333333333333
+epoch: 83
+dt: 25
+T: 20
+Tarin loss:0.01007
+Train acc: 98.894
+Test loss:0.00240
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 84
+dt: 25
+T: 20
+Tarin loss:0.01110
+Train acc: 98.468
+Test loss:0.00238
+Test acc: 89.236
+beat acc: 89.58333333333333
+epoch: 85
+dt: 25
+T: 20
+Tarin loss:0.00989
+Train acc: 98.894
+Test loss:0.00233
+Test acc: 89.583
+beat acc: 89.58333333333333
+epoch: 86
+dt: 25
+T: 20
+Tarin loss:0.01028
+Train acc: 98.894
+Test loss:0.00241
+Test acc: 88.194
+beat acc: 89.58333333333333
+epoch: 87
+dt: 25
+T: 20
+Tarin loss:0.01101
+Train acc: 98.213
+Test loss:0.00235
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 88
+dt: 25
+T: 20
+Tarin loss:0.01069
+Train acc: 98.809
+Test loss:0.00238
+Test acc: 89.583
+beat acc: 89.58333333333333
+epoch: 89
+dt: 25
+T: 20
+Tarin loss:0.01120
+Train acc: 98.043
+Test loss:0.00235
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 90
+dt: 25
+T: 20
+Tarin loss:0.01094
+Train acc: 98.809
+Test loss:0.00241
+Test acc: 87.500
+beat acc: 89.58333333333333
+epoch: 91
+dt: 25
+T: 20
+Tarin loss:0.01024
+Train acc: 98.894
+Epoch    91: reducing learning rate of group 0 to 1.0000e-06.
+Test loss:0.00238
+Test acc: 87.847
+beat acc: 89.58333333333333
+epoch: 92
+dt: 25
+T: 20
+Tarin loss:0.01065
+Train acc: 98.638
+Test loss:0.00255
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 93
+dt: 25
+T: 20
+Tarin loss:0.01065
+Train acc: 98.638
+Test loss:0.00239
+Test acc: 88.889
+beat acc: 89.58333333333333
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+epoch: 94
+dt: 25
+T: 20
+Tarin loss:0.01011
+Train acc: 98.809
+Test loss:0.00239
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 95
+dt: 25
+T: 20
+Tarin loss:0.01008
+Train acc: 99.064
+Test loss:0.00242
+Test acc: 88.194
+beat acc: 89.58333333333333
+epoch: 96
+dt: 25
+T: 20
+Tarin loss:0.00988
+Train acc: 98.723
+Test loss:0.00231
+Test acc: 88.542
+beat acc: 89.58333333333333
+epoch: 97
+dt: 25
+T: 20
+Tarin loss:0.01038
+Train acc: 99.149
+Test loss:0.00236
+Test acc: 88.194
+beat acc: 89.58333333333333
+epoch: 98
+dt: 25
+T: 20
+Tarin loss:0.00964
+Train acc: 99.149
+Test loss:0.00243
+Test acc: 88.542
+beat acc: 89.58333333333333
+epoch: 99
+dt: 25
+T: 20
+Tarin loss:0.00977
+Train acc: 99.149
+Test loss:0.00232
+Test acc: 88.889
+beat acc: 89.58333333333333
+epoch: 100
+dt: 25
+T: 20
+Tarin loss:0.01075
+Train acc: 98.468
+Test loss:0.00234
+Test acc: 88.889
+beat acc: 89.58333333333333
+best acc: 89.58333333333333 best_epoch: 77
+
+================================================================================
+结束时间: 2025-12-14 04:05:38
+耗时: 4401.15 秒 (73.35 分钟)
+返回代码: 0
+================================================================================

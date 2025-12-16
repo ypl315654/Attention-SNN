@@ -10,4 +10,4 @@ MA_SNN/DVSGestures/data/
 MA_SNN/DVSGestures/data/*.tar.gz
 
 # 忽略训练结果目录
-MA_SNN/DVSGestures/CNN/Result/
+# MA_SNN/DVSGestures/CNN/Result/

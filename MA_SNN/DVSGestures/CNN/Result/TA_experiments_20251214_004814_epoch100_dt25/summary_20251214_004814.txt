@@ -1,0 +1,17 @@
+================================================================================
+TA注意力机制对照实验总结
+================================================================================
+开始时间: 2025-12-14 00:48:14
+结束时间: 2025-12-14 04:05:38
+总耗时: 11844.03 秒 (197.40 分钟)
+成功: 3, 失败: 0
+
+详细结果:
+--------------------------------------------------------------------------------
+1. 实验1: T=10 (不禁止发放脉冲): 成功 (耗时: 2657.27秒)
+   日志文件: C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result\TA_experiments_20251214_004814_epoch100_dt25\exp1_T10_no_disable_20251214_004814.txt
+2. 实验2: T=20 (禁止发放脉冲): 成功 (耗时: 4775.57秒)
+   日志文件: C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result\TA_experiments_20251214_004814_epoch100_dt25\exp2_T20_disable_spike_20251214_004814.txt
+3. 实验3: T=20 (不禁止发放脉冲): 成功 (耗时: 4401.15秒)
+   日志文件: C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result\TA_experiments_20251214_004814_epoch100_dt25\exp3_T20_no_disable_20251214_004814.txt
+================================================================================

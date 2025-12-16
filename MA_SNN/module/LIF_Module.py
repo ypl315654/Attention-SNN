@@ -28,7 +28,8 @@ class AttLIF(nn.Module):
         mode_select="spike",
         mem_act=torch.relu,
         TR_model="NTR",
-        t_ratio=16
+        t_ratio=16,
+        disable_spike=False
     ):
         super().__init__()
         self.onlyLast = onlyLast
@@ -37,6 +38,7 @@ class AttLIF(nn.Module):
 
         self.network = nn.Sequential()
         self.attention_flag = attention
+        self.disable_spike = disable_spike  # 是否禁止发放脉冲
         self.linear = nn.Linear(
             in_features=inputSize,
             out_features=hiddenSize,
@@ -87,13 +89,52 @@ class AttLIF(nn.Module):
 
         if self.attention_flag == "no":
             data = outputsum
+            attention_weights = None
+        elif self.attention_flag == "TA":
+            # TA 返回 (原始输入, 注意力权重)
+            data, attention_weights = self.attention(outputsum)
         else:
+            # 其他注意力机制保持原样
             data = self.attention(outputsum)
+            attention_weights = None
+
+        # 如果是TA，预先计算哪些时间步允许发放脉冲
+        spike_mask_per_step = None
+        if self.attention_flag == "TA" and attention_weights is not None and self.disable_spike:
+            # attention_weights 形状: (b, timeWindows, channels)
+            # 计算每个时间步的平均权重（跨通道维度）
+            all_step_weights = attention_weights.mean(dim=2)  # (b, timeWindows)
+            
+            # 选择top T//2 个时间步允许发放脉冲
+            k = max(1, t // 2)  # 至少选择1步
+            _, top_indices = torch.topk(all_step_weights, k, dim=1)  # (b, k)
+            
+            # 为每个时间步创建掩码
+            spike_mask_per_step = []
+            for step in range(t):
+                is_top_k = (top_indices == step).any(dim=1)  # (b,)
+                spike_mask_per_step.append(is_top_k.float())  # (b,)
 
         for step in range(list(data.size())[1]):
             out = data[:, step, :]
-            for layer in self.network:
-                out = layer(out)
+            
+            # 如果是TA注意力且启用禁止发放脉冲，应用掩码
+            if self.attention_flag == "TA" and spike_mask_per_step is not None and self.disable_spike:
+                # 获取当前时间步的掩码
+                spike_mask = spike_mask_per_step[step]  # (b,)
+                spike_mask = spike_mask.view(b, 1)  # (b, 1) 用于广播
+                
+                # 正常通过LIF神经元（膜电位会更新）
+                for layer in self.network:
+                    out = layer(out)
+                
+                # 应用掩码：禁止发放脉冲的位置输出为0
+                out = out * spike_mask
+            else:
+                # 正常处理
+                for layer in self.network:
+                    out = layer(out)
+            
             output = out
 
             if step == 0:
@@ -138,12 +179,14 @@ class ConvAttLIF(nn.Module):
         mem_act=torch.relu,
         TR_model="NTR",
         c_ratio=16,
-        t_ratio=16
+        t_ratio=16,
+        disable_spike=False
     ):
         super().__init__()
 
         self.onlyLast = onlyLast
         self.attention_flag = attention
+        self.disable_spike = disable_spike  # 是否禁止发放脉冲
 
         self.conv2d = nn.Conv2d(
             in_channels=inputSize,
@@ -177,7 +220,7 @@ class ConvAttLIF(nn.Module):
         elif self.attention_flag == "CSA":
             self.attention = CSA(T, hiddenSize, c_ratio=c_ratio)
         elif self.attention_flag == "TA":
-            self.attention = TA(T, hiddenSize, t_ratio=t_ratio)
+            self.attention = TA(T, hiddenSize, t_ratio=t_ratio, disable_spike=self.disable_spike)
         elif self.attention_flag == "CA":
             self.attention = CA(T, hiddenSize, c_ratio=c_ratio)
         elif self.attention_flag == "SA":
@@ -224,13 +267,52 @@ class ConvAttLIF(nn.Module):
 
         if self.attention_flag == "no":
             data = outputsum
+            attention_weights = None
+        elif self.attention_flag == "TA":
+            # TA 返回 (原始输入, 注意力权重)
+            data, attention_weights = self.attention(outputsum)
         else:
+            # 其他注意力机制保持原样
             data = self.attention(outputsum)
+            attention_weights = None
+
+        # 如果是TA，预先计算哪些时间步允许发放脉冲
+        spike_mask_per_step = None
+        if self.attention_flag == "TA" and attention_weights is not None and self.disable_spike:
+            # attention_weights 形状: (b, timeWindows, channels, 1, 1)
+            # 计算每个时间步的平均权重（跨通道和空间维度）
+            all_step_weights = attention_weights.mean(dim=(2, 3, 4))  # (b, timeWindows)
+            
+            # 选择top T//2 个时间步允许发放脉冲
+            k = max(1, t // 2)  # 至少选择1步
+            _, top_indices = torch.topk(all_step_weights, k, dim=1)  # (b, k)
+            
+            # 为每个时间步创建掩码
+            spike_mask_per_step = []
+            for step in range(t):
+                is_top_k = (top_indices == step).any(dim=1)  # (b,)
+                spike_mask_per_step.append(is_top_k.float())  # (b,)
 
         for step in range(list(data.size())[1]):
             out = data[:, step, :, :, :]
-            for layer in self.network:
-                out = layer(out)
+            
+            # 如果是TA注意力且启用禁止发放脉冲，应用掩码
+            if self.attention_flag == "TA" and spike_mask_per_step is not None and self.disable_spike:
+                # 获取当前时间步的掩码
+                spike_mask = spike_mask_per_step[step]  # (b,)
+                spike_mask = spike_mask.view(b, 1, 1, 1)  # (b, 1, 1, 1) 用于广播
+                
+                # 正常通过LIF神经元（膜电位会更新）
+                for layer in self.network:
+                    out = layer(out)
+                
+                # 应用掩码：禁止发放脉冲的位置输出为0
+                out = out * spike_mask
+            else:
+                # 正常处理
+                for layer in self.network:
+                    out = layer(out)
+            
             output = out
 
             if step == 0:

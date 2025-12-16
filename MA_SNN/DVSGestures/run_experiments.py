@@ -173,7 +173,10 @@ def main():
         log_filename = f"{exp['log_name']}_{timestamp}.txt"
         log_path = os.path.join(result_dir, log_filename)
         
-        success, duration = run_experiment(exp["name"], exp["args"], exp["description"], log_path)
+        # 在命令行参数中加入结果目录，确保生成的图表/模型/日志落在指定文件夹
+        cmd_args_with_dir = exp["args"] + ["--result_dir", result_dir]
+        
+        success, duration = run_experiment(exp["name"], cmd_args_with_dir, exp["description"], log_path)
         results.append({
             "name": exp["name"],
             "success": success,

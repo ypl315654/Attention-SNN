@@ -1,0 +1,12 @@
+================================================================================
+实验: no
+开始时间: 2025-12-14 00:23:32
+执行命令: C:\anaconda\envs\attention_snn\python.exe C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\Att_SNN_CNN.py --attention no --num_epochs 300 --dt 25 --T 20 --batch_size 16 --lr 0.0001 --c_ratio 8 --t_ratio 5 --result_dir C:\Users\ypl\Desktop\python_code\Attention Spiking Neural Networks\Attention-SNN\MA_SNN\DVSGestures\CNN\Result\batch_20251214_002303_epoch300_dt25_T20
+================================================================================
+
+
+
+================================================================================
+用户中断实验
+中断时间: 2025-12-14 00:23:57
+================================================================================
